@@ -1,5 +1,6 @@
 #include <iostream>
 #include <algorithm>
+#include <ranges>
 #include <optional>
 #include <vector>
 #include <memory>
@@ -9,6 +10,20 @@
 struct Config {
     int id;
     float sensitivity;
+};
+
+struct Jogador1 {
+    std::string nome;
+    int pontuacao;
+};
+
+struct Jogador2 {
+    std::string nome;
+    int pontuacao;
+
+    bool operator<(const Jogador2& other) const {
+        return pontuacao < other.pontuacao;
+    }
 };
 
 // Função para buscar um Config por ID usando std::optional
@@ -196,6 +211,44 @@ int main() {
         std::cout << valor << " ";
     }
     std::cout << std::endl;
+
+    // Uso de std::ranges para manipular o buffer, por exemplo, invertendo a ordem dos elementos
+    std::ranges::reverse(buffer);
+    std::cout << "Buffer invertido:" << std::endl;
+    for (const auto& valor : buffer) {
+        std::cout << valor << " ";
+    }
+    std::cout << std::endl;
+
+    // Criando um Buffer de Jogadores e ordenando-os por pontuação usando std::ranges e Lambda
+    Buffer<Jogador1> jogadores1(3);
+    jogadores1.begin()[0] = {"Ana", 200};
+    jogadores1.begin()[1] = {"Bea", 150};
+    jogadores1.begin()[2] = {"Cia", 180};
+    
+    // Ordena os jogadores por pontuação usando um lambda como critério de comparação
+    std::ranges::sort(jogadores1, [](const Jogador1& a, const Jogador1& b) {
+        return a.pontuacao < b.pontuacao;
+    });
+    std::cout << "Jogadores ordenados por pontuação:" << std::endl;
+    for (const auto& jogador : jogadores1) {
+        std::cout << jogador.nome << ": " << jogador.pontuacao << std::endl;
+    }
+
+    // Criando um Buffer de Jogadores e ordenando-os por pontuação usando std::ranges e operator<
+    Buffer<Jogador2> jogadores2(3);
+    jogadores2.begin()[0] = {"João", 100};
+    jogadores2.begin()[1] = {"José", 150};
+    jogadores2.begin()[2] = {"Joseph", 120};
+
+    // Ordena os jogadores por pontuação usando o operador< definido na struct Jogador2
+    // Como parâmetro de comparação, passamos um lambda vazio, indicando que a comparação deve ser feita usando o operador< da struct Jogador2.
+    // O terceiro parâmetro é um ponteiro para o membro nome, indicando que a ordenação deve ser feita com base na pontuação dos jogadores.
+    std::ranges::sort(jogadores2, {}, &Jogador2::pontuacao);
+    std::cout << "Jogadores ordenados por pontuação:" << std::endl;
+    for (const auto& jogador : jogadores2) {
+        std::cout << jogador.nome << ": " << jogador.pontuacao << std::endl;
+    }
 
     return 0;
 }
