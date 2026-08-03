@@ -1,2 +1,24 @@
-**/build/
+# IDE e Ambientes
 **/.vscode/
+**/.venv/
+
+# C/C++ / CMake
+**/build/
+*.out
+**/CMakeCache.txt
+**/CMakeFiles/
+
+# Arquivos Compilados Typst/LaTeX
+*.pdf
+
+# Python
+**/__pycache__/
+*.py[cod]
+
+# Bancos de Dados
+*.db
+*.sqlite3
+
+# Outputs de scripts/projetos
+output.bmp
+smoothstep_graph.png
