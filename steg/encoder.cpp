@@ -1,10 +1,11 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <filesystem>
 
 int main(int argc, char* argv[]) {
     if (argc < 3) {
-        std::cerr << "Uso: " << argv[0] << " <arquivo.bmp> <mensagem>" << std::endl;
+        std::cerr << "Uso: " << argv[0] << " <arquivo.bmp> <arquivo.txt> | <mensagem>" << std::endl;
         return 1;
     }
 
@@ -30,8 +31,24 @@ int main(int argc, char* argv[]) {
     file.seekg(curr);
     file.read(pixels.data(), pixels.size());
     file.close();
+    
+    std::string message;
+    if (std::filesystem::path(argv[2]).extension() == ".txt") {
+        std::ifstream text_file(argv[2]);
+        if (!text_file) {
+            std::cerr << "Erro ao abrir o arquivo de texto." << std::endl;
+            return 1;
+        }
+        std::string line;
+        while (std::getline(text_file, line)) {
+            message += line + '\n';
+        }
+        text_file.close();
+        message = message.substr(0, message.size() - 1);
+    } else {
+        message = argv[2];
+    }
 
-    std::string message = argv[2];
     message += '\0';
     
     uint p = 0;
