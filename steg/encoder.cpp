@@ -49,6 +49,11 @@ int main(int argc, char* argv[]) {
         message = argv[2];
     }
 
+    if (message.size() * 8 > pixels.size()) {
+        std::cerr << "Mensagem muito grande para o arquivo de imagem." << std::endl;
+        return 1;
+    }
+
     message += '\0';
     
     uint p = 0;
