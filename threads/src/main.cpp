@@ -64,7 +64,7 @@ int main() {
     // Alternativa: Usar um monitor, que é uma abstração de alto nível que combina mutex e condição de variável, 
     //          permitindo que as threads esperem por certas condições sem busy waiting.
     
-
+    
     return 0;
 }
 
