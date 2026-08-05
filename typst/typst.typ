@@ -11,7 +11,7 @@
   justify: true,
   first-line-indent: 2em
 )
-
+1
 // --- TÍTULO DO DOCUMENTO ---
 #align(center)[
   = Typst
@@ -318,6 +318,8 @@ Visite o #link("https://typst.app")[Site do Typst].
 )
 ```
 
+A mensagem de rodapé #footnote[Este é um rodapé de exemplo.] aparece no final da página.
+
 #pagebreak()
 
 = Modularidade (Arquivos Múltiplos)
@@ -377,3 +379,17 @@ Isto é um hashtag: \#Typst. \
 Se você quiser forçar uma quebra de linha sem iniciar um novo parágrafo, use \\ no final da linha: \
 Primeira linha. \
 Segunda linha, mas ainda no mesmo parágrafo.
+
+== Referências de Citação
+// Para criar uma citação use <nome> e depois referencie com @nome.
+
+A tabela @tab:tabela mostra o autor e o ano da famosa teoria da relatividade.
+
+#figure()[
+  #table(
+    columns: (1fr, 1fr),
+    gutter: 1em,
+    [ *Autor:* Albert Einstein ],
+    [ *Ano:* 1905 ]
+  )
+]<tab:tabela>
